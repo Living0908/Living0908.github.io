@@ -4,7 +4,7 @@
   {% for post in posts.toArray() %}
   {% if post.indexing == undefined or post.indexing %}
   <entry>
-    <title>{{ post.title }}</title>
+    <title>{{ post.path }}</title>
     <link href="{{ [url, post.path] | urlJoin | uriencode }}"/>
     <url>{{ [url, post.path] | urlJoin | uriencode }}</url>
     {% if content %}

@@ -3,5 +3,32 @@
   
   
   
+  <entry>
+    <title>2022/04/20/使用hexo和gitee搭建博客的一些坑/</title>
+    <link href="/2022/04/20/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgitee%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/"/>
+    <url>/2022/04/20/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgitee%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</url>
+    
+    <content type="html"><![CDATA[<h3 id="1-hexo-init-生成相应文件夹"><a href="#1-hexo-init-生成相应文件夹" class="headerlink" title="1.hexo init 生成相应文件夹"></a>1.<code>hexo init</code> 生成相应文件夹</h3><p>找一个空的文件夹进行git bash。否则会报错</p><h3 id="2-每次hexo-s-d前先hexo-clean-cl"><a href="#2-每次hexo-s-d前先hexo-clean-cl" class="headerlink" title="2.每次hexo s/d前先hexo clean(cl)"></a>2.每次<code>hexo s/d</code>前先<code>hexo clean(cl)</code></h3><p>清除缓存</p><h3 id="3-注册gitee后开启pages服务记得挑个工作日"><a href="#3-注册gitee后开启pages服务记得挑个工作日" class="headerlink" title="3.注册gitee后开启pages服务记得挑个工作日"></a>3.注册gitee后开启pages服务记得挑个工作日</h3><p>gitee申请该服务需要进行实名认证，实名认证只会在工作日进行审核</p><h3 id="4-hexo-d后出现git-done打开网页出现404页"><a href="#4-hexo-d后出现git-done打开网页出现404页" class="headerlink" title="4.hexo d后出现git done打开网页出现404页"></a>4.<code>hexo d</code>后出现git done打开网页出现404页</h3><p>git了之后需要在pages服务中点击更新重新部署网站才能查看，修改配置后网页未同步同理</p><p><img src="/images/gitee1.png"></p><h3 id="5-出现502，504页"><a href="#5-出现502，504页" class="headerlink" title="5.出现502，504页"></a>5.出现502，504页</h3><p>个人博客使用的还是gitee服务器，毕竟人家服务器免费，多刷新几次就出来了</p><h3 id="6-leancloud用于统计真的太香了"><a href="#6-leancloud用于统计真的太香了" class="headerlink" title="6.leancloud用于统计真的太香了"></a>6.leancloud用于统计真的太香了</h3><p><img src="/images/leancloud.png"></p><h3 id="7-config-yml文件问题"><a href="#7-config-yml文件问题" class="headerlink" title="7._config.yml文件问题"></a>7._config.yml文件问题</h3><p>和.github在同一目录的config文件与在themes里面的config文件要注意区分，主题配置网上都有教程，但是blog的网页title在前一个config文件中更改，图标在后一个主题文件中修改。</p><p>我为了更改掉Hexo的title整了好久才发现原来在总的配置文件下更改</p><h3 id="8-与fluid主题相关"><a href="#8-与fluid主题相关" class="headerlink" title="8.与fluid主题相关"></a>8.与fluid主题相关</h3><ul><li><p>更改配置文件中的图片要将name以及后缀名完全对应，否则部署后，blog显示为默认图片或者黑色</p></li><li><p>关于页（about），<code>hexo new page about</code>很easy，但是加layout属性要配置在front-matter里面（hexo默认已经建好）而不是重新新建</p></li><li><p>本地预览，<code>hexo s</code>后，在配置文件做出修改，直接<code>ctrl+s</code>一波，刷新网页即可预览</p></li><li><p>官方文档给的比CSDN给的多得多，直接搜索hexo fluid就有能找到</p><p><img src="/images/fluid.jpg"></p></li></ul><p>总体来说搭建这个博客还是挺快乐的，欢迎访问<a href="Living0908.gitee.io">我的博客</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>经验总结</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>hexo</tag>
+      
+      <tag>gitee</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
   
 </search>

@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>2022/05/15/消息轰炸简介代码/</title>
+    <link href="/2022/05/15/%E6%B6%88%E6%81%AF%E8%BD%B0%E7%82%B8%E7%AE%80%E4%BB%8B%E4%BB%A3%E7%A0%81/"/>
+    <url>/2022/05/15/%E6%B6%88%E6%81%AF%E8%BD%B0%E7%82%B8%E7%AE%80%E4%BB%8B%E4%BB%A3%E7%A0%81/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;tchar.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-type">int</span> i;<br>cout &lt;&lt; <span class="hljs-string">&quot;请输入你想要轰炸的次数：&quot;</span> &lt;&lt; endl;<br>cin &gt;&gt; i;<br>LPCWSTR str1 = _T(<span class="hljs-string">&quot;XXX&quot;</span>);<span class="hljs-comment">//QQ好友备注名</span><br>HWND H = <span class="hljs-built_in">FindWindow</span>(<span class="hljs-number">0</span>, str1);<br><span class="hljs-keyword">while</span> (i-- &gt; <span class="hljs-number">0</span>)<br>&#123;<br><span class="hljs-built_in">SendMessage</span>(H, WM_PASTE, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><span class="hljs-built_in">SendMessage</span>(H, WM_KEYDOWN, VK_RETURN, <span class="hljs-number">0</span>);<br>&#125;<br><br>&#125;<br><span class="hljs-comment">//使用前先要将想发的信息复制在剪贴板，再run</span><br></code></pre></td></tr></table></figure><p><img src="/2022/05/15/%E6%B6%88%E6%81%AF%E8%BD%B0%E7%82%B8%E7%AE%80%E4%BB%8B%E4%BB%A3%E7%A0%81/1.jpg"></p><p>挺好玩的哈哈哈哈哈，要找一个不会删你的铁子。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>自己撸的代码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2022/05/15/NTL实现RSA/</title>
     <link href="/2022/05/15/NTL%E5%AE%9E%E7%8E%B0RSA/"/>
     <url>/2022/05/15/NTL%E5%AE%9E%E7%8E%B0RSA/</url>

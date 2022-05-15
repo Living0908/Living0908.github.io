@@ -16,24 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一些坑的相应经验网上是真没有，只能自己慢慢摸索">
+    <meta name="description" content="使用C++中的NTL实现RSA，四十行代码解决">
 <meta property="og:type" content="article">
-<meta property="og:title" content="坑之hexo&amp;gitee部署blog">
-<meta property="og:url" content="http://example.com/2022/04/20/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgitee%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/index.html">
+<meta property="og:title" content="NTL实现RSA">
+<meta property="og:url" content="http://example.com/2022/05/15/NTL%E5%AE%9E%E7%8E%B0RSA/index.html">
 <meta property="og:site_name" content="Living0908">
-<meta property="og:description" content="一些坑的相应经验网上是真没有，只能自己慢慢摸索">
+<meta property="og:description" content="使用C++中的NTL实现RSA，四十行代码解决">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/1.jpg">
-<meta property="article:published_time" content="2022-04-20T06:39:51.322Z">
-<meta property="article:modified_time" content="2022-04-20T07:54:31.348Z">
+<meta property="og:image" content="http://example.com/img/4.jpg">
+<meta property="article:published_time" content="2022-05-15T04:13:26.991Z">
+<meta property="article:modified_time" content="2022-05-15T04:27:25.814Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="hexo">
-<meta property="article:tag" content="gitee">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="RSA">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/1.jpg">
+<meta name="twitter:image" content="http://example.com/img/4.jpg">
   
   
-  <title>坑之hexo&amp;gitee部署blog - Living0908</title>
+  <title>NTL实现RSA - Living0908</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -191,7 +191,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="坑之hexo&amp;gitee部署blog">
+            <span class="h2" id="subtitle" title="NTL实现RSA">
               
             </span>
 
@@ -201,8 +201,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-04-20 14:39" pubdate>
-        2022年4月20日 下午
+      <time datetime="2022-05-15 12:13" pubdate>
+        2022年5月15日 中午
       </time>
     </span>
   
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      664 字
+      1.2k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      10 分钟
     </span>
   
 
@@ -258,30 +258,12 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">坑之hexo&amp;gitee部署blog</h1>
+            <h1 style="display: none">NTL实现RSA</h1>
             
             <div class="markdown-body">
-              <h3 id="1-hexo-init-生成相应文件夹"><a href="#1-hexo-init-生成相应文件夹" class="headerlink" title="1.hexo init 生成相应文件夹"></a>1.<code>hexo init</code> 生成相应文件夹</h3><p>找一个空的文件夹进行git bash。否则会报错</p>
-<h3 id="2-每次hexo-s-d前先hexo-clean-cl"><a href="#2-每次hexo-s-d前先hexo-clean-cl" class="headerlink" title="2.每次hexo s/d前先hexo clean(cl)"></a>2.每次<code>hexo s/d</code>前先<code>hexo clean(cl)</code></h3><p>清除缓存</p>
-<h3 id="3-注册gitee后开启pages服务记得挑个工作日"><a href="#3-注册gitee后开启pages服务记得挑个工作日" class="headerlink" title="3.注册gitee后开启pages服务记得挑个工作日"></a>3.注册gitee后开启pages服务记得挑个工作日</h3><p>gitee申请该服务需要进行实名认证，实名认证只会在工作日进行审核</p>
-<h3 id="4-hexo-d后出现git-done打开网页出现404页"><a href="#4-hexo-d后出现git-done打开网页出现404页" class="headerlink" title="4.hexo d后出现git done打开网页出现404页"></a>4.<code>hexo d</code>后出现git done打开网页出现404页</h3><p>git了之后需要在pages服务中点击更新重新部署网站才能查看，修改配置后网页未同步同理</p>
-<p><img src="/2022/04/20/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgitee%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/gitee1.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="5-出现502，504页"><a href="#5-出现502，504页" class="headerlink" title="5.出现502，504页"></a>5.出现502，504页</h3><p>个人博客使用的还是gitee服务器，毕竟人家服务器免费，多刷新几次就出来了</p>
-<h3 id="6-leancloud用于统计真的太香了"><a href="#6-leancloud用于统计真的太香了" class="headerlink" title="6.leancloud用于统计真的太香了"></a>6.leancloud用于统计真的太香了</h3><p><img src="/2022/04/20/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgitee%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/leancloud.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="7-config-yml文件问题"><a href="#7-config-yml文件问题" class="headerlink" title="7._config.yml文件问题"></a>7._config.yml文件问题</h3><p>和.github在同一目录的config文件与在themes里面的config文件要注意区分，主题配置网上都有教程，但是blog的网页title在前一个config文件中更改，图标在后一个主题文件中修改。</p>
-<p>我为了更改掉Hexo的title整了好久才发现原来在总的配置文件下更改</p>
-<h3 id="8-与fluid主题相关"><a href="#8-与fluid主题相关" class="headerlink" title="8.与fluid主题相关"></a>8.与fluid主题相关</h3><ul>
-<li><p>更改配置文件中的图片要将name以及后缀名完全对应，否则部署后，blog显示为默认图片或者黑色</p>
-</li>
-<li><p>关于页（about），<code>hexo new page about</code>很easy，但是加layout属性要配置在front-matter里面（hexo默认已经建好）而不是重新新建</p>
-</li>
-<li><p>本地预览，<code>hexo s</code>后，在配置文件做出修改，直接<code>ctrl+s</code>一波，刷新网页即可预览</p>
-</li>
-<li><p>官方文档给的比CSDN给的多得多，直接搜索hexo fluid就有能找到</p>
-<p><img src="/2022/04/20/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cgitee%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/fluid.jpg" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
-<p>总体来说搭建这个博客还是挺快乐的，欢迎访问<a href="Living0908.gitee.io">我的博客</a></p>
+              <figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></div></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;NTL/ZZ.h&gt;</span></span><br>NTL_CLIENT<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> BITS 256      <span class="hljs-comment">//要求概率素数 p , q 的比特位数达 BITS bits</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">KeyGeneration</span><span class="hljs-params">(ZZ&amp;e, ZZ&amp;d, ZZ&amp;euler)</span> <span class="hljs-comment">//生成e,d</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">RandomPrime</span>(e, <span class="hljs-number">64</span>, <span class="hljs-number">10</span>);<br>	d = <span class="hljs-built_in">InvMod</span>(e, euler);<br>&#125;<br><br><span class="hljs-function">ZZ <span class="hljs-title">Encryption</span><span class="hljs-params">(ZZ&amp;e, ZZ&amp;n, ZZ&amp;M)</span> <span class="hljs-comment">//加密函数</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">PowerMod</span>(M, e, n);<br>&#125;<br><br><span class="hljs-function">ZZ <span class="hljs-title">Decryption</span><span class="hljs-params">(ZZ&amp;d, ZZ&amp;n, ZZ&amp;C)</span> <span class="hljs-comment">//解密函数</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">PowerMod</span>(C, d, n);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	ZZ  p, q;   <span class="hljs-comment">//两个 BITS 比特的随机概率素数 p , q</span><br>	ZZ  n, e, d, euler;   <span class="hljs-comment">// n=p*q, euler=(p-1)*(q-1), e---加密密钥,  d---解密密钥</span><br>	<span class="hljs-type">int</span> bits = BITS;<br>	ZZ M, C;<br>	cout &lt;&lt; <span class="hljs-string">&quot;请输入明文：&quot;</span> &lt;&lt; endl;<br>	cin &gt;&gt; M;<br>	<span class="hljs-built_in">RandomPrime</span>(p, bits, <span class="hljs-number">10</span>);    <br>	<span class="hljs-built_in">RandomPrime</span>(q, bits, <span class="hljs-number">10</span>);<br>	n = p * q;   <br>	euler = (p - <span class="hljs-number">1</span>)*(q - <span class="hljs-number">1</span>);    <span class="hljs-comment">//计算 n=p*q 及 欧拉函数值 euler(n)=(p-1)*(q-1)</span><br>	<span class="hljs-built_in">KeyGeneration</span>(d, e, euler);    <span class="hljs-comment">//生成密钥: d, e , d*e=1 Mod euler(n)</span><br>	<span class="hljs-built_in">Encryption</span>(e, n, M); <span class="hljs-comment">//加密: C=M^e(Mod n)</span><br>	C= <span class="hljs-built_in">Encryption</span>(e, n, M);<br>	cout &lt;&lt; <span class="hljs-string">&quot;密文是：&quot;</span> &lt;&lt; C&lt;&lt;endl;<br>	<span class="hljs-built_in">Decryption</span>(d, n, C); <span class="hljs-comment">//解密: M=C^d(Mod n)</span><br>	ZZ M1;<span class="hljs-comment">//用于验证M与最后通过C解密的明文是否相等</span><br>	M1= <span class="hljs-built_in">Decryption</span>(d, n, C);<br>	<span class="hljs-keyword">if</span> (M == M1)<br>		cout &lt;&lt; <span class="hljs-string">&quot;RSA成功运行&quot;</span> &lt;&lt; endl;<br>	cout &lt;&lt; endl; <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>琢磨了好久的NTL官方文档之后，发现写起来也还挺顺手的，主要是在invmod()那里报错，一直提示inverse not defined，此时的e是GCD(e,euler)&#x3D;1求的，最后直接将e换成了一个64bit的随机素数，解决了报错的问题。需要打印每一个e，d只需要加入cout即可。</p>
 
             </div>
             <hr>
@@ -291,7 +273,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">经验总结</a>
+                      <a class="hover-with-bg" href="/categories/%E8%87%AA%E5%B7%B1%E6%92%B8%E7%9A%84%E4%BB%A3%E7%A0%81/">自己撸的代码</a>
                     
                   </div>
                 
@@ -299,9 +281,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/hexo/">hexo</a>
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
                     
-                      <a class="hover-with-bg" href="/tags/gitee/">gitee</a>
+                      <a class="hover-with-bg" href="/tags/RSA/">RSA</a>
                     
                   </div>
                 
@@ -318,15 +300,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/20/wireshark%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">wireshark基础操作</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/04/21/%E6%88%B4%E5%BB%BA%E4%B8%9A%E6%95%A3%E6%96%87/">
+                        <span class="hidden-mobile">《我的个天》读书笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

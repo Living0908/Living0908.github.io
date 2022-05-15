@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>2022/05/15/NTL实现RSA/</title>
+    <link href="/2022/05/15/NTL%E5%AE%9E%E7%8E%B0RSA/"/>
+    <url>/2022/05/15/NTL%E5%AE%9E%E7%8E%B0RSA/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></div></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;NTL/ZZ.h&gt;</span></span><br>NTL_CLIENT<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> BITS 256      <span class="hljs-comment">//要求概率素数 p , q 的比特位数达 BITS bits</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">KeyGeneration</span><span class="hljs-params">(ZZ&amp;e, ZZ&amp;d, ZZ&amp;euler)</span> <span class="hljs-comment">//生成e,d</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-built_in">RandomPrime</span>(e, <span class="hljs-number">64</span>, <span class="hljs-number">10</span>);<br>d = <span class="hljs-built_in">InvMod</span>(e, euler);<br>&#125;<br><br><span class="hljs-function">ZZ <span class="hljs-title">Encryption</span><span class="hljs-params">(ZZ&amp;e, ZZ&amp;n, ZZ&amp;M)</span> <span class="hljs-comment">//加密函数</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">return</span> <span class="hljs-built_in">PowerMod</span>(M, e, n);<br>&#125;<br><br><span class="hljs-function">ZZ <span class="hljs-title">Decryption</span><span class="hljs-params">(ZZ&amp;d, ZZ&amp;n, ZZ&amp;C)</span> <span class="hljs-comment">//解密函数</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">return</span> <span class="hljs-built_in">PowerMod</span>(C, d, n);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>ZZ  p, q;   <span class="hljs-comment">//两个 BITS 比特的随机概率素数 p , q</span><br>ZZ  n, e, d, euler;   <span class="hljs-comment">// n=p*q, euler=(p-1)*(q-1), e---加密密钥,  d---解密密钥</span><br><span class="hljs-type">int</span> bits = BITS;<br>ZZ M, C;<br>cout &lt;&lt; <span class="hljs-string">&quot;请输入明文：&quot;</span> &lt;&lt; endl;<br>cin &gt;&gt; M;<br><span class="hljs-built_in">RandomPrime</span>(p, bits, <span class="hljs-number">10</span>);    <br><span class="hljs-built_in">RandomPrime</span>(q, bits, <span class="hljs-number">10</span>);<br>n = p * q;   <br>euler = (p - <span class="hljs-number">1</span>)*(q - <span class="hljs-number">1</span>);    <span class="hljs-comment">//计算 n=p*q 及 欧拉函数值 euler(n)=(p-1)*(q-1)</span><br><span class="hljs-built_in">KeyGeneration</span>(d, e, euler);    <span class="hljs-comment">//生成密钥: d, e , d*e=1 Mod euler(n)</span><br><span class="hljs-built_in">Encryption</span>(e, n, M); <span class="hljs-comment">//加密: C=M^e(Mod n)</span><br>C= <span class="hljs-built_in">Encryption</span>(e, n, M);<br>cout &lt;&lt; <span class="hljs-string">&quot;密文是：&quot;</span> &lt;&lt; C&lt;&lt;endl;<br><span class="hljs-built_in">Decryption</span>(d, n, C); <span class="hljs-comment">//解密: M=C^d(Mod n)</span><br>ZZ M1;<span class="hljs-comment">//用于验证M与最后通过C解密的明文是否相等</span><br>M1= <span class="hljs-built_in">Decryption</span>(d, n, C);<br><span class="hljs-keyword">if</span> (M == M1)<br>cout &lt;&lt; <span class="hljs-string">&quot;RSA成功运行&quot;</span> &lt;&lt; endl;<br>cout &lt;&lt; endl; <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br><br>&#125;<br><br></code></pre></td></tr></table></figure><p>琢磨了好久的NTL官方文档之后，发现写起来也还挺顺手的，主要是在invmod()那里报错，一直提示inverse not defined，此时的e是GCD(e,euler)&#x3D;1求的，最后直接将e换成了一个64bit的随机素数，解决了报错的问题。需要打印每一个e，d只需要加入cout即可。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>自己撸的代码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+      <tag>RSA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2022/04/21/戴建业散文/</title>
     <link href="/2022/04/21/%E6%88%B4%E5%BB%BA%E4%B8%9A%E6%95%A3%E6%96%87/"/>
     <url>/2022/04/21/%E6%88%B4%E5%BB%BA%E4%B8%9A%E6%95%A3%E6%96%87/</url>
@@ -29,9 +56,9 @@
   
   
   <entry>
-    <title>2022/04/20/wiresharks基础操作/</title>
-    <link href="/2022/04/20/wiresharks%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
-    <url>/2022/04/20/wiresharks%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
+    <title>2022/04/20/wireshark基础操作/</title>
+    <link href="/2022/04/20/wireshark%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
+    <url>/2022/04/20/wireshark%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
     
     <content type="html"><![CDATA[<h4 id><a href="#" class="headerlink" title></a></h4>]]></content>
     

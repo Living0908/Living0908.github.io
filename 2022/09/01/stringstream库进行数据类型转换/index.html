@@ -16,23 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="面向对象的编程">
+    <meta name="description" content="基于sstream库的数据类型转换定义了三个类：istringsteam,ostringsteam,stringstream分别用来进行流的输入输出和输入输出操作 基础用法： 12345int n;string s&#x3D;&amp;#x27;12345&amp;#x27;;stringstream ss;ss&lt;&lt;s;ss&gt;&gt;n;&#x2F;&#x2F;此时n&#x3D;12345  使用stringstream提升效率正常要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java面向对象">
-<meta property="og:url" content="http://example.com/2022/07/11/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:title" content="Stringstream库数据类型转换">
+<meta property="og:url" content="http://example.com/2022/09/01/stringstream%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/index.html">
 <meta property="og:site_name" content="Living0908">
-<meta property="og:description" content="面向对象的编程">
+<meta property="og:description" content="基于sstream库的数据类型转换定义了三个类：istringsteam,ostringsteam,stringstream分别用来进行流的输入输出和输入输出操作 基础用法： 12345int n;string s&#x3D;&amp;#x27;12345&amp;#x27;;stringstream ss;ss&lt;&lt;s;ss&gt;&gt;n;&#x2F;&#x2F;此时n&#x3D;12345  使用stringstream提升效率正常要">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/8.jpg">
-<meta property="article:published_time" content="2022-07-11T03:18:38.725Z">
-<meta property="article:modified_time" content="2022-08-06T02:08:59.760Z">
+<meta property="og:image" content="http://example.com/img/13.jpg">
+<meta property="article:published_time" content="2022-09-01T03:15:13.168Z">
+<meta property="article:modified_time" content="2022-09-01T05:37:27.640Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="数据类型转换">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/8.jpg">
+<meta name="twitter:image" content="http://example.com/img/13.jpg">
   
   
-  <title>Java面向对象 - Living0908</title>
+  <title>Stringstream库数据类型转换 - Living0908</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -190,7 +191,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Java面向对象">
+            <span class="h2" id="subtitle" title="Stringstream库数据类型转换">
               
             </span>
 
@@ -200,8 +201,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-07-11 11:18" pubdate>
-        2022年7月11日 上午
+      <time datetime="2022-09-01 11:15" pubdate>
+        2022年9月1日 上午
       </time>
     </span>
   
@@ -211,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      424 字
+      1.2k 字
     </span>
   
 
@@ -220,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      10 分钟
     </span>
   
 
@@ -257,23 +258,24 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java面向对象</h1>
+            <h1 style="display: none">Stringstream库数据类型转换</h1>
             
             <div class="markdown-body">
-              <h3 id="设计对象并使用"><a href="#设计对象并使用" class="headerlink" title="设计对象并使用"></a>设计对象并使用</h3><h5 id="类：是对象共同特征的描述"><a href="#类：是对象共同特征的描述" class="headerlink" title="类：是对象共同特征的描述"></a>类：是对象共同特征的描述</h5><h5 id="对象：是真实存在的具体实例"><a href="#对象：是真实存在的具体实例" class="headerlink" title="对象：是真实存在的具体实例"></a>对象：是真实存在的具体实例</h5><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> class 类名&#123;<br>    <span class="hljs-number">1.</span>成员变量（代表属性）;<br>    <span class="hljs-number">2.</span>成员方法（代表行为）;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">XX</span><span class="hljs-params">()</span>&#123;<br>        ……<br>    &#125;<br>    <span class="hljs-number">3.</span>构造器;<br>    <span class="hljs-number">4.</span>代码块;<br>    <span class="hljs-number">5.</span>内部类;<br>&#125;<br><span class="hljs-comment">//在同一个package内的main函数可以调用类</span><br><span class="hljs-comment">//调用方法</span><br>类名	对象名=<span class="hljs-keyword">new</span> 类名（）;<br></code></pre></td></tr></table></figure>
+              <h3 id="基于sstream库的数据类型转换"><a href="#基于sstream库的数据类型转换" class="headerlink" title="基于sstream库的数据类型转换"></a>基于sstream库的数据类型转换</h3><p>定义了三个类：istringsteam,ostringsteam,stringstream分别用来进行流的输入输出和输入输出操作</p>
+<p>基础用法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> n;<br>string s=<span class="hljs-string">&#x27;12345&#x27;</span>;<br>stringstream ss;<br>ss&lt;&lt;s;<br>ss&gt;&gt;n;<span class="hljs-comment">//此时n=12345</span><br></code></pre></td></tr></table></figure>
 
-<h5 id="定义类的补充注意事项"><a href="#定义类的补充注意事项" class="headerlink" title="定义类的补充注意事项"></a>定义类的补充注意事项</h5><ul>
-<li>类名首字母建议大写，且有意义</li>
-<li>一个Java文件中可以定义多个class类，但只能一个类是public修饰，而且public修饰的类名必须称为代码文件名，实际开发中一个文件定义一个class类</li>
-</ul>
-<h3 id="模拟购物车编程训练"><a href="#模拟购物车编程训练" class="headerlink" title="模拟购物车编程训练"></a>模拟购物车编程训练</h3><h5 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h5><p>模拟购物车模块的功能，需要添加商品到购物车去，同时需要提供修改商品的购买数量，结算商品价格功能</p>
-<h5 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h5><ul>
-<li>购物车中每一个商品都是一个对象，需要先定义一个商品类</li>
-<li>购物车本身也是一个对象，可以使用数组对象代表</li>
-<li>完成界面架构，让用户选择操作的功能</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+<h3 id="使用stringstream提升效率"><a href="#使用stringstream提升效率" class="headerlink" title="使用stringstream提升效率"></a>使用stringstream提升效率</h3><p>正常要给一个文件中写入内容</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">ofstream <span class="hljs-title">ofile</span><span class="hljs-params">(<span class="hljs-string">&quot;eg.text&quot;</span>)</span></span>;<br><span class="hljs-comment">//每次符合条件时都会一行一行的往里面写入内容</span><br>ofile&lt;&lt;<span class="hljs-string">&quot;xxxxx&quot;</span>&lt;&lt;endl;<br></code></pre></td></tr></table></figure>
 
+<p>使用stringstream往文件中写入内容，可以先把要输入的内容存储在对象的缓存区</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">ofstream <span class="hljs-title">ofile</span><span class="hljs-params">(<span class="hljs-string">&quot;eg.text&quot;</span>)</span></span>;<br>stringstream oss;<br>oss&lt;&lt;<span class="hljs-string">&quot;xxxx&quot;</span>&lt;&lt;endl;<span class="hljs-comment">//每次满足条件时先写入缓存</span><br>ofile&lt;&lt;oss.<span class="hljs-built_in">str</span>();<span class="hljs-comment">//最后一次性写入</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="蓝桥杯题目"><a href="#蓝桥杯题目" class="headerlink" title="蓝桥杯题目"></a>蓝桥杯题目</h3><p><img src="/2022/09/01/stringstream%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>分析：例如里面的意思是：从一开始拼数字——1，2，3，4，5，6，7，8，9，10，11在11这里会用到第四个1，故按顺序拼只能拼到10，每次数字最先用完的是1，所以只需要统计1的使用频率，既可以算出可以拼到多少</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-comment">//将整型转化为字符串</span><br><span class="hljs-function">string <span class="hljs-title">int_to_str</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span><br><span class="hljs-function"></span>&#123;<br>	string output;<br>	stringstream oss;<br>	oss &lt;&lt; i;<br>	oss &gt;&gt; output;<br>	<span class="hljs-keyword">return</span> output;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;<br>	<span class="hljs-type">int</span> count1 = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		string s = <span class="hljs-built_in">int_to_str</span>(i);<br>		count1 += <span class="hljs-built_in">count</span>(s.<span class="hljs-built_in">begin</span>(), s.<span class="hljs-built_in">end</span>(), <span class="hljs-string">&#x27;1&#x27;</span>);<span class="hljs-comment">//调用algorithm头文件里的算法，计算1出现的次数</span><br>		<span class="hljs-keyword">if</span> (count1 &gt;= <span class="hljs-number">2021</span>) &#123; <span class="hljs-keyword">break</span>; &#125;<br>		<span class="hljs-keyword">else</span> &#123; i += <span class="hljs-number">1</span>; &#125;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (count1 &gt; <span class="hljs-number">2021</span>) &#123; i -= <span class="hljs-number">1</span>; &#125;<span class="hljs-comment">//判断此时最大的i能不能被组成</span><br>	cout &lt;&lt; i &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/01/stringstream%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/2.jpg" srcset="/img/loading.gif" lazyload></p>
 
             </div>
             <hr>
@@ -285,13 +287,17 @@
                     
                       <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
                     
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%87%AA%E5%B7%B1%E6%92%B8%E7%9A%84%E4%BB%A3%E7%A0%81/">自己撸的代码</a>
+                    
                   </div>
                 
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">数据类型转换</a>
                     
                   </div>
                 
@@ -308,18 +314,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/07/13/IJ%E6%8E%A7%E5%88%B6%E5%8F%B0%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">IJ控制台输出中文乱码</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/11/Java%E5%9F%BA%E7%A1%80/">
-                        <span class="hidden-mobile">Java语言基础</span>
+                      <a href="/2022/07/15/Java%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B%E8%AE%AD%E7%BB%83/">
+                        <span class="hidden-mobile">Java基础编程训练</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

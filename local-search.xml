@@ -4,6 +4,81 @@
   
   
   <entry>
+    <title>2022/10/08/python网络编程之TCP/</title>
+    <link href="/2022/10/08/python%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B9%8BTCP/"/>
+    <url>/2022/10/08/python%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E4%B9%8BTCP/</url>
+    
+    <content type="html"><![CDATA[<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><h3 id="TCP客户端程序开发流程"><a href="#TCP客户端程序开发流程" class="headerlink" title="TCP客户端程序开发流程"></a>TCP客户端程序开发流程</h3><p>1.创建客户端套接字对象</p><p>2.和服务端套接字创建链接</p><p>3.发送数据</p><p>4.接收数据</p><p>5.关闭客户端套接字</p><h4 id="socket类的介绍"><a href="#socket类的介绍" class="headerlink" title="socket类的介绍"></a>socket类的介绍</h4><figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><span class="hljs-comment">#导入socket模块</span><br>socket.socket(AddressFamily,<span class="hljs-type">Type</span>)<br><span class="hljs-comment">#创建socket对象使用socket类</span><br><span class="hljs-comment">#AddressFamily是指IP地址类型，IPv4（AF_INET）,IPv6</span><br><span class="hljs-comment">#Type,传输协议类型,TCP(SOCK_STREAM)</span><br></code></pre></td></tr></table></figure><h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">if</span> __name__ ==<span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    tcp_client_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)<br>    tcp_client_socket.connect((<span class="hljs-string">&quot;XX.XX.XX.XX&quot;</span>,<span class="hljs-number">8080</span>))<span class="hljs-comment">#元组形式来表示IP地址和端口号</span><br>    tcp_client_socket.send(<span class="hljs-string">&quot;hello world&quot;</span>.encoding(encoding=<span class="hljs-string">&quot;utf-8&quot;</span>))<br>    recv_data=tcp_client_sockey.recv(<span class="hljs-number">1024</span>)<span class="hljs-comment">#可以接受的数据大小</span><br>    <span class="hljs-built_in">print</span>(recv_data.decode())<br>    tcp_client_socket.close()<br></code></pre></td></tr></table></figure><h3 id="TCP服务端程序开发流程"><a href="#TCP服务端程序开发流程" class="headerlink" title="TCP服务端程序开发流程"></a>TCP服务端程序开发流程</h3><p>1.创建服务端端套接字对象</p><p>2.绑定IP地址和端口号（bind)</p><p>3.设置监听(listen)</p><p>4.等待接收客户端的连接请求(accept)</p><p>5.接收数据(recv)</p><p>6.发送数据(send)</p><p>7.关闭套接字</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    tcp_server_socket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)<br>    tcp_server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 设置端口复用</span><br>    tcp_server_socket.bind((<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-number">8888</span>))<br>    <span class="hljs-comment"># &quot;&quot;表示本机IP</span><br>    tcp_server_socket.listen(<span class="hljs-number">128</span>)<br>    <span class="hljs-comment"># 128表示服务器等待排队连接的最大数量</span><br>    connect_socket,ip_port=tcp_server_socket.accept()<br>    <span class="hljs-comment"># tcp_server_socket只能用于监听，accept创建了一个socket用来recv</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;客户端地址：&quot;</span>,ip_port)<br>    recv_data=connect_socket.recv(<span class="hljs-number">1024</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;客户端发送的数据为：&quot;</span>,recv_data.decode())<br>    connect_socket.send(<span class="hljs-string">&quot;你的数据我收到了&quot;</span>.encode())<br>    connect_socket.close()<br>    tcp_server_socket.close()<br></code></pre></td></tr></table></figure><h3 id="多任务TCP服务端程序开发"><a href="#多任务TCP服务端程序开发" class="headerlink" title="多任务TCP服务端程序开发"></a>多任务TCP服务端程序开发</h3><p>1.编写一个TCP服务端程序，循环等待接受客户端连接请求</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    tcp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>    tcp_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, <span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 设置端口复用</span><br>    tcp_server_socket.bind((<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-number">8888</span>))<br>    <span class="hljs-comment"># &quot;&quot;表示本机IP</span><br>    tcp_server_socket.listen(<span class="hljs-number">128</span>)<br>    <span class="hljs-comment"># 128表示服务器等待排队连接的最大数量</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        connect_socket, ip_port = tcp_server_socket.accept()<br>        <span class="hljs-comment"># tcp_server_socket只能用于监听，accept创建了一个socket用来recv</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;客户端地址：&quot;</span>, ip_port)<br>        recv_data = connect_socket.recv(<span class="hljs-number">1024</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;客户端发送的数据为：&quot;</span>, recv_data.decode())<br>        connect_socket.send(<span class="hljs-string">&quot;你的数据我收到了&quot;</span>.encode())<br>        connect_socket.close()<br><br></code></pre></td></tr></table></figure><p>2.使用多线程，当客户端与服务端建立连接成功，创建子线程，使用子线程专门处理客户端的请求，防止主线阻塞</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> threading<br><br><br><span class="hljs-comment"># 处理客户端函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">handle_client</span>():<br>    recv_data = connect_socket.recv(<span class="hljs-number">1024</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;客户端发送的数据为：&quot;</span>, recv_data.decode())<br>    connect_socket.send(<span class="hljs-string">&quot;你的数据我收到了&quot;</span>.encode())<br>    connect_socket.close()<br>    <br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    tcp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>    tcp_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, <span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 设置端口复用</span><br>    tcp_server_socket.bind((<span class="hljs-string">&quot;&quot;</span>, <span class="hljs-number">8888</span>))<br>    <span class="hljs-comment"># &quot;&quot;表示本机IP</span><br>    tcp_server_socket.listen(<span class="hljs-number">128</span>)<br>    <span class="hljs-comment"># 128表示服务器等待排队连接的最大数量</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        connect_socket, ip_port = tcp_server_socket.accept()<br>        <span class="hljs-comment"># tcp_server_socket只能用于监听，accept创建了一个socket用来recv</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;客户端地址：&quot;</span>, ip_port)<br>        sub_thread=threading.Thread(target=handle_client)<br>        <span class="hljs-comment"># 使用多线程去接收多个用户的请求</span><br>        sub_thread.start()<br><br>    tcp_server_socket.close()<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>TCP网络编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>2022/10/08/python多任务及进程/</title>
+    <link href="/2022/10/08/python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8F%8A%E8%BF%9B%E7%A8%8B/"/>
+    <url>/2022/10/08/python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8F%8A%E8%BF%9B%E7%A8%8B/</url>
+    
+    <content type="html"><![CDATA[<h3 id="多任务"><a href="#多任务" class="headerlink" title="多任务"></a>多任务</h3><p>两种多任务形式：</p><ul><li>并发：在一段时间<strong>交替</strong>去执行多个任务；并发数量大于CPU的核心数</li><li>并行：在一段时间内<strong>真正的一起执行</strong>多任务；任务数量小于等于CPU核心数</li></ul><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>在python中实现多任务采用进程，进程是资源分配的最小单位，它是操作系统进行资源分配和调度运行的基本单位。</p><h5 id="多进程的作用："><a href="#多进程的作用：" class="headerlink" title="多进程的作用："></a>多进程的作用：</h5><ul><li>程序运行会默认创建一个进程，这个默认创建的进程称之为主进程</li><li>程序运行后又创建了一个进程，这个进程称之为子进程</li></ul><h3 id="多进程完成多任务"><a href="#多进程完成多任务" class="headerlink" title="多进程完成多任务"></a>多进程完成多任务</h3><h5 id="进程创建步骤："><a href="#进程创建步骤：" class="headerlink" title="进程创建步骤："></a>进程创建步骤：</h5><p>1.导入进程包</p><figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> multiprocessing<br></code></pre></td></tr></table></figure><p>2.通过进程类创建进程对象</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">进程对象=multiprocessing.Process(参数)<br><span class="hljs-comment"># 参数：</span><br><span class="hljs-comment"># target执行发目标任务名，这里之的是函数名（方法名）</span><br><span class="hljs-comment"># name,group</span><br></code></pre></td></tr></table></figure><p>3.启动进程执行任务</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">进程对象.start()<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> multiprocessing<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">coding</span>():<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;coding...&quot;</span>)<br>        time.sleep(<span class="hljs-number">0.8</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">coding1</span>():<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;coding1...&quot;</span>)<br>        time.sleep(<span class="hljs-number">0.8</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    coding_process = multiprocessing.Process(target=coding)<br>    coding1_process = multiprocessing.Process(target=coding1)<br>    <span class="hljs-comment"># target所指向的函数名不加括号</span><br>    coding_process.start()<br>    coding1_process.start()<br><br></code></pre></td></tr></table></figure><h5 id="进程执行带有参数的任务："><a href="#进程执行带有参数的任务：" class="headerlink" title="进程执行带有参数的任务："></a>进程执行带有参数的任务：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">coding_process=multiprocessing.Process(target=coding,args=(<span class="hljs-number">3</span>,))<br><span class="hljs-comment"># 以元组的形式给函数传参</span><br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">coding_process=multiprocessing.Process(target=coding,kwargs=&#123;<span class="hljs-string">&quot;num&quot;</span>:<span class="hljs-number">3</span>&#125;)<br><span class="hljs-comment"># 以字典的形式给函数传参</span><br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> multiprocessing<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">coding</span>(<span class="hljs-params">num,name</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num):<br>        <span class="hljs-built_in">print</span>(name)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;coding...&quot;</span>)<br>        time.sleep(<span class="hljs-number">0.8</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">coding1</span>(<span class="hljs-params">count</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(count):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;coding1...&quot;</span>)<br>        time.sleep(<span class="hljs-number">0.8</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    coding_process = multiprocessing.Process(target=coding, args=(<span class="hljs-number">3</span>,<span class="hljs-string">&quot;nice&quot;</span>))<br>    <span class="hljs-comment"># 多个变量传参</span><br>    coding1_process = multiprocessing.Process(target=coding1,kwargs=&#123;<span class="hljs-string">&quot;count&quot;</span>:<span class="hljs-number">2</span>&#125;)<br>    coding_process.start()<br>    coding1_process.start()<br><br></code></pre></td></tr></table></figure><h5 id="获取进程编号"><a href="#获取进程编号" class="headerlink" title="获取进程编号:"></a>获取进程编号:</h5><p>1.获取当前进程号</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-built_in">print</span>(os.getpid)<br></code></pre></td></tr></table></figure><p>2.获取父进程编号</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-built_in">print</span>(os.getppid)<br></code></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> multiprocessing<br><span class="hljs-keyword">import</span> os<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">coding</span>(<span class="hljs-params">num,name</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(num):<br>        <span class="hljs-built_in">print</span>(name)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前子进程号为：&quot;</span>,os.getpid())<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;当前父进程号为：&quot;</span>,os.getppid())<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;coding...&quot;</span>)<br>        time.sleep(<span class="hljs-number">0.8</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">coding1</span>(<span class="hljs-params">count</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(count):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;coding1...&quot;</span>)<br>        time.sleep(<span class="hljs-number">0.8</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;主进程的进程号：&quot;</span>,os.getpid())<br>    coding_process = multiprocessing.Process(target=coding, args=(<span class="hljs-number">3</span>,<span class="hljs-string">&quot;nice&quot;</span>))<br>    coding1_process = multiprocessing.Process(target=coding1,kwargs=&#123;<span class="hljs-string">&quot;count&quot;</span>:<span class="hljs-number">2</span>&#125;)<br>    coding_process.start()<br>    coding1_process.start()<br></code></pre></td></tr></table></figure><p><img src="/2022/10/08/python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8F%8A%E8%BF%9B%E7%A8%8B/2.jpg"></p><h5 id="进程间不共享全局变量"><a href="#进程间不共享全局变量" class="headerlink" title="进程间不共享全局变量"></a>进程间不共享全局变量</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> multiprocessing<br><span class="hljs-keyword">import</span> time<br><br>my_list = []<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">write_list</span>():<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>        my_list.append(i)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;add:&quot;</span>,i)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;write_data:&quot;</span>,my_list)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_list</span>():<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;read_data:&quot;</span>,my_list)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    write_process=multiprocessing.Process(target=write_list)<br>    read_process=multiprocessing.Process(target=read_list)<br>    write_process.start()<br>    time.sleep(<span class="hljs-number">1</span>)<br>    read_process.start()<br></code></pre></td></tr></table></figure><p>上面的三个进程（一个主进程，两个子进程）分别操作的都是自己进程里面的全局变量my_list，不会对其他进程里的全局变量产生影响，所以进程之间不共享全局变量，只不过继承之间的全局变量名相同而已，但是操作的不是同一个基础南横里面的全局变量。<strong>创建子进程会对主进程资源进行拷贝</strong></p><p><img src="/2022/10/08/python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8F%8A%E8%BF%9B%E7%A8%8B/python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%8F%8A%E8%BF%9B%E7%A8%8B%5C1.jpg"></p><h5 id="子进程和主进程的结束顺序："><a href="#子进程和主进程的结束顺序：" class="headerlink" title="子进程和主进程的结束顺序："></a>子进程和主进程的结束顺序：</h5><ul><li>主进程会等待所有的子进程执行结束再结束</li><li>设置守护主进程，主进程退出后子进程直接销毁，不再执行子进程中的代码</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">子进程名.daemon=<span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure><ul><li>主动销毁子进程</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pyhon">子进程名.terminate()<br></code></pre></td></tr></table></figure><p><strong>上面两种结果相同</strong></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+      <tag>操作系统</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>2022/09/09/正则表达式/</title>
+    <link href="/2022/09/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <url>/2022/09/09/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>字符匹配</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2022/09/01/stringstream库进行数据类型转换/</title>
     <link href="/2022/09/01/stringstream%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
     <url>/2022/09/01/stringstream%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</url>
@@ -12,8 +87,6 @@
     
     
     <categories>
-      
-      <category>学习笔记</category>
       
       <category>自己撸的代码</category>
       
@@ -83,31 +156,6 @@
   
   
   <entry>
-    <title>2022/07/11/Java面向对象/</title>
-    <link href="/2022/07/11/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
-    <url>/2022/07/11/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
-    
-    <content type="html"><![CDATA[<h3 id="设计对象并使用"><a href="#设计对象并使用" class="headerlink" title="设计对象并使用"></a>设计对象并使用</h3><h5 id="类：是对象共同特征的描述"><a href="#类：是对象共同特征的描述" class="headerlink" title="类：是对象共同特征的描述"></a>类：是对象共同特征的描述</h5><h5 id="对象：是真实存在的具体实例"><a href="#对象：是真实存在的具体实例" class="headerlink" title="对象：是真实存在的具体实例"></a>对象：是真实存在的具体实例</h5><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> class 类名&#123;<br>    <span class="hljs-number">1.</span>成员变量（代表属性）;<br>    <span class="hljs-number">2.</span>成员方法（代表行为）;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">XX</span><span class="hljs-params">()</span>&#123;<br>        ……<br>    &#125;<br>    <span class="hljs-number">3.</span>构造器;<br>    <span class="hljs-number">4.</span>代码块;<br>    <span class="hljs-number">5.</span>内部类;<br>&#125;<br><span class="hljs-comment">//在同一个package内的main函数可以调用类</span><br><span class="hljs-comment">//调用方法</span><br>类名对象名=<span class="hljs-keyword">new</span> 类名（）;<br></code></pre></td></tr></table></figure><h5 id="定义类的补充注意事项"><a href="#定义类的补充注意事项" class="headerlink" title="定义类的补充注意事项"></a>定义类的补充注意事项</h5><ul><li>类名首字母建议大写，且有意义</li><li>一个Java文件中可以定义多个class类，但只能一个类是public修饰，而且public修饰的类名必须称为代码文件名，实际开发中一个文件定义一个class类</li></ul><h3 id="模拟购物车编程训练"><a href="#模拟购物车编程训练" class="headerlink" title="模拟购物车编程训练"></a>模拟购物车编程训练</h3><h5 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h5><p>模拟购物车模块的功能，需要添加商品到购物车去，同时需要提供修改商品的购买数量，结算商品价格功能</p><h5 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h5><ul><li>购物车中每一个商品都是一个对象，需要先定义一个商品类</li><li>购物车本身也是一个对象，可以使用数组对象代表</li><li>完成界面架构，让用户选择操作的功能</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>]]></content>
-    
-    
-    <categories>
-      
-      <category>学习笔记</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>Java</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>2022/07/11/Java基础/</title>
     <link href="/2022/07/11/Java%E5%9F%BA%E7%A1%80/"/>
     <url>/2022/07/11/Java%E5%9F%BA%E7%A1%80/</url>
@@ -125,31 +173,6 @@
     <tags>
       
       <tag>Java</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>2022/07/11/Java网络编程/</title>
-    <link href="/2022/07/11/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
-    <url>/2022/07/11/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
-    
-    <content type="html"><![CDATA[<p>计算机网络，借助于网络操作系统、网络管理软件、网络通信协议系统系统的协调下，实现不同物理主机上的数据可以共享和信息的传递交换，称之为计算机的网络系统。</p><h3 id="网络通信协议概述"><a href="#网络通信协议概述" class="headerlink" title="网络通信协议概述"></a>网络通信协议概述</h3>]]></content>
-    
-    
-    <categories>
-      
-      <category>学习笔记</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>Java网络编程</tag>
       
     </tags>
     
@@ -252,31 +275,6 @@
     <tags>
       
       <tag>读书笔记</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>2022/04/20/wireshark基础操作/</title>
-    <link href="/2022/04/20/wireshark%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/"/>
-    <url>/2022/04/20/wireshark%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</url>
-    
-    <content type="html"><![CDATA[<h4 id><a href="#" class="headerlink" title></a></h4>]]></content>
-    
-    
-    <categories>
-      
-      <category>学习笔记</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>wireshark</tag>
       
     </tags>
     
